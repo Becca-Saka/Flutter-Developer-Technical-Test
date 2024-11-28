@@ -1,8 +1,13 @@
 # Flutter Developer Technical Test
 
 ## Result 
+
+
 Here is a video of the result -
-[result.mp4](result.mp4)
+
+https://github.com/Becca-Saka/Flutter-Developer-Technical-Test/raw/refs/heads/main/result.mp4
+
+[result.mp4](https://github.com/Becca-Saka/Flutter-Developer-Technical-Test/raw/refs/heads/main/result.mp4)
 
 ## Instructions
 
