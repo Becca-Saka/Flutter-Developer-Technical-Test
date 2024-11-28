@@ -16,6 +16,7 @@ class AppImageData {
   static String get trophy => '$_basePath/trophy.png';
   static String get emoji => '$_basePath/emoji.png';
   static String get lock => '$_basePath/lock.png';
+  static String get mainMenuBg => '$_basePath/main_menu_bg.png';
 }
 
 class AppImage extends StatelessWidget {

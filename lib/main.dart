@@ -2,5 +2,5 @@ import 'package:flutter/material.dart';
 import 'package:nounshunt/app.dart';
 
 void main() {
-  runApp(const MaterialApp(home: MyApp()));
+  runApp(const MyApp());
 }

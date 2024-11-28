@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nounshunt/bottom_nouns_section.dart';
-import 'package:nounshunt/dashboard_view.dart';
-import 'package:nounshunt/progress_indicator.dart';
 import 'package:nounshunt/shared/app_images.dart';
+import 'package:nounshunt/ui/views/dashboard_view.dart';
+import 'package:nounshunt/ui/widgets/bottom_nouns_section.dart';
+import 'package:nounshunt/ui/widgets/progress_indicator.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
