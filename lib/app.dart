@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'splash_view.dart';
+import 'package:nounshunt/splash_view.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,7 +13,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const SplashView(),
-      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }

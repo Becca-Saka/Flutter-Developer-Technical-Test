@@ -15,14 +15,14 @@ class _UnveilImageAnimationState extends State<UnveilImageAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  double fracturedValue = 0.0;
-  double desiredClipValue = 100;
+  double unveiledValue = 0.0;
+  double totalClipValue = 100;
   @override
   void initState() {
     super.initState();
 
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1000),
       vsync: this,
     );
     _animation = Tween(begin: 1.0, end: 0.0).animate(
@@ -33,7 +33,7 @@ class _UnveilImageAnimationState extends State<UnveilImageAnimation>
     )..addListener(
         () {
           setState(() {
-            fracturedValue = desiredClipValue * _animation.value;
+            unveiledValue = totalClipValue * _animation.value;
           });
         },
       );
@@ -53,7 +53,7 @@ class _UnveilImageAnimationState extends State<UnveilImageAnimation>
       child: widget.child,
       builder: (context, child) {
         return ClipRect(
-          clipper: ScaleClipper(fracturedValue),
+          clipper: ScaleClipper(unveiledValue),
           child: child,
         );
       },

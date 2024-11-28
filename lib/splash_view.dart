@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nounshunt/bottom_nouns_section.dart';
+import 'package:nounshunt/dashboard_view.dart';
 import 'package:nounshunt/shared/app_images.dart';
-
-import 'dashboard_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -16,7 +15,7 @@ class _SplashViewState extends State<SplashView>
   late AnimationController _controller;
   late Animation<double> _slideAnimation;
   late Animation<double> _opacityAnimation;
-
+  bool fade = false;
   @override
   void initState() {
     super.initState();
@@ -26,10 +25,29 @@ class _SplashViewState extends State<SplashView>
       vsync: this,
     );
 
-    _slideAnimation = Tween<double>(begin: 0.0, end: 0.75).animate(
+    _slideAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0.0, end: -0.05).chain(
+          CurveTween(curve: Curves.easeIn),
+        ),
+        weight: 20,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: -0.1, end: 0.75).chain(
+          CurveTween(curve: Curves.easeOut),
+        ),
+        weight: 60,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0.75, end: 0.7).chain(
+          CurveTween(curve: Curves.easeInOut),
+        ),
+        weight: 20,
+      ),
+    ]).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: const Interval(0.4, 0.7, curve: Curves.easeIn),
+        curve: const Interval(0.4, 0.7),
       ),
     );
 
@@ -40,15 +58,16 @@ class _SplashViewState extends State<SplashView>
       ),
     );
 
-    _controller.forward();
+    _controller.addListener(() {
+      if (_slideAnimation.value >= 0.7) {
+        setState(() {
+          fade = true;
+        });
 
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const DashboardView()),
-        );
+        _slideAnimation.removeListener(() {});
       }
     });
+    _controller.forward();
   }
 
   @override
@@ -59,73 +78,68 @@ class _SplashViewState extends State<SplashView>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Scaffold(
-          backgroundColor: Colors.white,
-          body: Stack(
-            fit: StackFit.expand,
-            children: [
-              FadeTransition(
-                opacity: _opacityAnimation,
-                child: AppImage(
-                  path: AppImageData.dexter,
-                  boxFit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Opacity(
-                        opacity: _opacityAnimation.value,
-                        child: Center(
-                          child: Hero(
-                            tag: 'logo',
-                            createRectTween: (begin, end) {
-                              return MaterialRectArcTween(
-                                  begin: begin, end: end);
-                            },
-                            child: Transform.translate(
-                              offset: Offset(
-                                0,
-                                -MediaQuery.of(context).size.height *
-                                    _slideAnimation.value /
-                                    1.11,
+    return fade
+        ? const DashboardView()
+        : AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Scaffold(
+                backgroundColor: Colors.white,
+                body: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    FadeTransition(
+                      opacity: _opacityAnimation,
+                      child: AppImage(
+                        path: AppImageData.dexter,
+                        boxFit: BoxFit.cover,
+                        width: double.infinity,
+                        height: double.infinity,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Opacity(
+                              opacity: _opacityAnimation.value,
+                              child: Center(
+                                child: Transform.translate(
+                                  offset: Offset(
+                                    0,
+                                    -MediaQuery.of(context).size.height *
+                                        _slideAnimation.value /
+                                        1.11,
+                                  ),
+                                  child: const BottomNounsSection(),
+                                ),
                               ),
-                              child: const BottomNounsSection(),
                             ),
-                          ),
+                            const Text(
+                              'Games and Software ©️ Dash Studios, Dash Studios and it\'s Logo are a trademark of Dash Studios.',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(
+                              height: 16,
+                            ),
+                          ],
                         ),
                       ),
-                      const Text(
-                        'Games and Software ©️ Dash Studios, Dash Studios and it\'s Logo are a trademark of Dash Studios.',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(
-                        height: 15,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+              );
+            },
+          );
   }
 }

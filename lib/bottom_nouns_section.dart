@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nounshunt/shared/app_images.dart';
 
 import 'unveil_animation.dart';
 
@@ -12,13 +13,13 @@ class BottomNounsSection extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: SizedBox(
-          height: 100,
+          height: 120,
           child: UnveilImageAnimation(
             child: Container(
-              width: 220,
-              decoration: const BoxDecoration(
+              width: 240,
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("assets/nouns_green.png"),
+                  image: AssetImage(AppImageData.nounsHuntLogo),
                   fit: BoxFit.contain,
                 ),
               ),
