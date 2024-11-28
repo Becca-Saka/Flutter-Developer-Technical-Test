@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nounshunt/ui/views/splash_view.dart';
+import 'package:nounshunt/app/app_routes.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
               useMaterial3: true,
             ),
-            home: const SplashView(),
+            onGenerateRoute: AppRouter.onGenerateRoute,
+            initialRoute: AppRouter.initialRoute,
           );
         });
   }

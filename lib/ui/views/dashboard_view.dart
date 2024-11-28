@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nounshunt/shared/app_images.dart';
+import 'package:nounshunt/ui/views/animated_background.dart';
 import 'package:nounshunt/ui/widgets/animated_logo.dart';
 import 'package:nounshunt/ui/widgets/clip_progress_indicator.dart';
 import 'package:nounshunt/ui/widgets/progress_cliper.dart';
@@ -18,12 +19,13 @@ class DashboardView extends StatelessWidget {
       backgroundColor: const Color(0xFFfafaff),
       body: Stack(
         children: [
-          AppImage(
-            path: AppImageData.mainMenuBg,
-            boxFit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,
-          ),
+          const AnimatedBackground(),
+          // AppImage(
+          //   path: AppImageData.mainMenuBg,
+          //   boxFit: BoxFit.cover,
+          //   width: double.infinity,
+          //   height: double.infinity,
+          // ),
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),

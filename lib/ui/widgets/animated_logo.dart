@@ -45,7 +45,7 @@ class _AnimatedLogoState extends State<AnimatedLogo>
       child: Center(
         child: AppImage(
           path: AppImageData.nounsHuntLogo,
-          width: 300,
+          width: 260,
         ),
       ),
     );
