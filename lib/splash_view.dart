@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nounshunt/bottom_nouns_section.dart';
 import 'package:nounshunt/dashboard_view.dart';
+import 'package:nounshunt/progress_indicator.dart';
 import 'package:nounshunt/shared/app_images.dart';
 
 class SplashView extends StatefulWidget {
@@ -21,7 +22,7 @@ class _SplashViewState extends State<SplashView>
     super.initState();
 
     _controller = AnimationController(
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 6),
       vsync: this,
     );
 
@@ -51,7 +52,7 @@ class _SplashViewState extends State<SplashView>
       ),
     );
 
-    _opacityAnimation = Tween<double>(begin: 1.0, end: 0.7).animate(
+    _opacityAnimation = Tween<double>(begin: 1.0, end: 0.6).animate(
       CurvedAnimation(
         parent: _controller,
         curve: const Interval(0.5, 0.8),
@@ -120,14 +121,29 @@ class _SplashViewState extends State<SplashView>
                                 ),
                               ),
                             ),
-                            const Text(
-                              'Games and Software ©️ Dash Studios, Dash Studios and it\'s Logo are a trademark of Dash Studios.',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              textAlign: TextAlign.center,
+                            AnimatedSwitcher(
+                              switchInCurve: Curves.easeIn,
+                              transitionBuilder:
+                                  (Widget child, Animation<double> animation) {
+                                return FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                );
+                              },
+                              duration: const Duration(seconds: 1),
+                              child: _controller.value > 0.4
+                                  ? AppProgressIndicator(
+                                      progress: _controller.value,
+                                    )
+                                  : const Text(
+                                      'Games and Software ©️ Dash Studios, Dash Studios and it\'s Logo are a trademark of Dash Studios.',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
                             ),
                             const SizedBox(
                               height: 16,
